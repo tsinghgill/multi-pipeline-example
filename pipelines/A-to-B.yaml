@@ -1,0 +1,32 @@
+version: 2.0
+
+pipelines:
+  - id: A-to-B-Test-2
+    status: running
+    name: A-to-B-Test
+    description: Moves from A to B
+    connectors:
+      - id: tenant-a
+        type: source
+        plugin: builtin:s3
+        name: tenant-a
+        settings:
+          "aws.accessKeyId": ""
+          "aws.secretAccessKey": ""
+          "aws.region": "us-east-2"
+          "aws.bucket": "tenant-a-demo"
+          prefix: "Tenant-B-Relationship/Out-to-Tenant-B"
+      - id: tenant-b
+        type: destination
+        plugin: builtin:s3
+        name: tenant-b
+        settings:
+          "aws.accessKeyId": ""
+          "aws.secretAccessKey": ""
+          "aws.region": "us-east-2"
+          "aws.bucket": "tenant-b-demo"
+          prefix: "Tenant-A-Relationship/In-from-Tenant-A"
+          format: "json"
+          # output the raw payload as a string
+          sdk.record.format: template
+          sdk.record.format.options: '{{ printf "%s" .Payload.After }}'

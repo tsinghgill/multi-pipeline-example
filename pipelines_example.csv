@@ -1,0 +1,10 @@
+requestor,source_tenant_approver,destination_tenant_approver,pipeline_name,pipeline_description,connector_name_source,aws.bucket_source,prefix_source,connector_name_destination,aws.bucket_destination,prefix_destination,format_destination
+A,A_owner,B_owner,A-to-B,Moves-from-A-to-B,A-to-B_source,tenant-a-demo,Tenant-B-Relationship/Out-to-Tenant-B,A-to-B_destination,tenant-b-demo,Tenant-A-Relationship/In-from-Tenant-A,json
+A,B_owner,A_owner,B-to-A,Moves from B to A,B-to-A_source,tenant-b-demo,Tenant-A-Relationship/Out-to-Tenant-A,B-to-A_destination,tenant-a-demo,Tenant-B-Relationship/In-from-Tenant-B,json
+B,B_owner,C_owner,B-to-C,Moves from B to C,B-to-C_source,tenant-b-demo,Tenant-C-Relationship/Out-to-Tenant-C,B-to-C_destination,tenant-c-demo,Tenant-B-Relationship/In-from-Tenant-B,json
+B,C_owner,B_owner,C-to-B,Moves from C to B,C-to-B_source,tenant-c-demo,Tenant-B-Relationship/Out-to-Tenant-B,C-to-B_destination,tenant-b-demo,Tenant-C-Relationship/In-from-Tenant-C,json
+C,C_owner,A_owner,C-to-A,Moves from C to A,C-to-A_source,tenant-c-demo,Tenant-A-Relationship/Out-to-Tenant-A,C-to-A_destination,tenant-a-demo,Tenant-C-Relationship/In-from-Tenant-C,json
+C,A_owner,C_owner,A-to-C,Moves from A to C,A-to-C_source,tenant-a-demo,Tenant-C-Relationship/Out-to-Tenant-C,A-to-C_destination,tenant-c-demo,Tenant-A-Relationship/In-from-Tenant-A,json
+A,A_owner,Data_lake_owner,A-to-Data-Lake,Moves from A to the Data Lake,A-to-Data-Lake_source,tenant-a-demo,Promote-to-Data-Lake,A-to-Data-Lake_destination,promote-to-data-lake-demo,Tenant-A-Contribution,json
+B,B_owner,Data_lake_owner,B-to-Data-Lake,Moves from B to the Data Lake,B-to-Data-Lake_source,tenant-b-demo,Promote-to-Data-Lake,B-to-Data-Lake_destination,promote-to-data-lake-demo,Tenant-B-Contribution,json
+C,C_owner,Data_lake_owner,C-to-Data-Lake,Moves from C to the Data Lake,C-to-Data-Lake_source,tenant-b-demo,Promote-to-Data-Lake,C-to-Data-Lake_destination,promote-to-data-lake-demo,Tenant-C-Contribution,json

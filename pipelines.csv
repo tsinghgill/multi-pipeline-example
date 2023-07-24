@@ -1,0 +1,1 @@
+requestor,source_tenant_approver,destination_tenant_approver,pipeline_name,pipeline_description,connector_name_source,aws.bucket_source,prefix_source,connector_name_destination,aws.bucket_destination,prefix_destination,format_destination
