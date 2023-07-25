@@ -32,19 +32,19 @@ def create_pipeline(pipeline_config):
 
     # Make the API call to create a new pipeline
     response = requests.post("http://localhost:8080/v1/pipelines", json=payload)
-    logging.info(f"Response: {response.text}")  
+    # logging.info(f"Response: {response.text}")  
 
     if response.status_code == 200:
         pipeline_data = response.json()
-        logging.info(f"Created pipeline: {pipeline_data}")
+        logging.info(f"Created pipeline: {pipeline_data['id']}")
 
         if 'id' in pipeline_data:
-            log_audit(f"Pipeline: {pipeline_data['id']} - Created")
+            log_audit(f"Pipeline: {pipeline_data['id']}, Name: {pipeline_data['config']['name']}, Description: {pipeline_data['config']['description']} - Created")
         
         return pipeline_data
     else:
-        logging.error("Failed to create pipeline")
-        log_audit("Failed to create pipeline")
+        logging.error(f"Failed to create pipeline. Name: {pipeline_config['pipeline_name']}, Description: {pipeline_config['pipeline_description']}")
+        log_audit(f"Failed to create pipeline. Name: {pipeline_config['pipeline_name']}, Description: {pipeline_config['pipeline_description']}")
         return None
 
 # Function to create a connector
@@ -53,7 +53,7 @@ def create_connector(connector_config):
     payload = connector_config
     # Make the API call to create a new connector
     response = requests.post("http://localhost:8080/v1/connectors", json=payload)
-    logging.info(f"Response: {response.text}")  
+    # logging.info(f"Response: {response.text}")  
 
     if response.status_code == 200:
         connector_data = response.json()
@@ -138,7 +138,6 @@ def watch_file_changes():
         added_pipelines = [pipeline for pipeline in pipeline_configs if pipeline['pipeline_name'] not in current_pipeline_names]
         removed_pipelines = [pipeline for pipeline in current_pipelines if pipeline['config']['name'] not in new_pipeline_names]
 
-
         # Provision new pipelines
         for pipeline in added_pipelines:
             # Create the pipeline
@@ -146,6 +145,10 @@ def watch_file_changes():
             
             # Check the pipeline is successfully created before proceeding
             if pipeline_response is not None:
+                # Provide more details in log and audit files
+                logging.info(f"Creating connectors for pipeline: {pipeline_response['id']}")
+                log_audit(f"Creating connectors for pipeline: {pipeline_response['id']}, Name: {pipeline['pipeline_name']}, Description: {pipeline['pipeline_description']}")
+
                 # Create source and destination connectors
                 source_connector_response = create_connector({
                     'type': 'TYPE_SOURCE',
@@ -193,6 +196,10 @@ def watch_file_changes():
 
         # Unprovision the removed pipelines
         for pipeline in removed_pipelines:
+            # Provide more details in log and audit files
+            logging.info(f"Removing pipeline: {pipeline['id']}")
+            log_audit(f"Removing pipeline: {pipeline['id']}, Name: {pipeline['config']['name']}, Description: {pipeline['config']['description']}")
+
             # Stop the pipeline
             stop_pipeline(pipeline['id'])
 
